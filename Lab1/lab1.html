@@ -1,0 +1,79 @@
+<html>
+<script>
+    
+// question 1
+    
+    var x = function(){
+        console.log("Hello world");
+    }
+    
+    function newFunct(x){
+        x();
+    }
+    
+    newFunct(x);
+    
+ // question 2
+    
+    var vehicle = {
+        colour : "red",
+        id : "cdc1234",
+        printColour : function(){
+            console.log("Red");
+        }
+    }
+    
+    //showing the colour
+    
+    console.log(vehicle.colour);
+    
+    //calling the inner function
+    
+    vehicle.printColour();
+    
+// question 3
+    
+    var vehicleName = "car"
+    
+    function printVehicleName(){
+        console.log(this.vehicleName);
+    }
+    
+    var Vehicle = {
+        vehicleName : "van",
+        getVehicleName : printVehicleName
+    }
+    
+    printVehicleName();
+    Vehicle.getVehicleName();
+    
+// question 4
+    
+    function cal(tax){
+        function calcTax(amount){
+            return amount + tax ;
+        }
+        return calcTax;
+    }
+    
+    var x = cal(100)
+    
+    console.log(x(50));
+    
+// question 5
+    
+    function gitHubAPI(callback){
+        $.getJSON('https://api.github.com/users',callback);
+    }
+    
+    function userD(data){
+        data.forEach(element => {
+            if(element.id == 1){
+                console.log(element.url);
+            }
+        })
+    }
+    
+    gitHubAPI(userD);
+</script>
+</html>
