@@ -1,0 +1,173 @@
+<html>
+    <head>
+    <script type="text/javascript">
+        
+        //question1-------------------------
+        var vehicleName = "Toyota"; //<- a global variable
+        
+        function printVehicleNameOuter(){
+            console.log(this.vehicleName);
+        }
+        
+        console.log(this); // shows window object
+        printVehicleNameOuter() // shows "Toyota"
+        
+        var Vehicle = {
+            vehicleName : 'Nissan',
+            printVehicleNameInner : printVehicleNameOuter
+        };
+        
+        Vehicle.printVehicleNameInner();
+        
+        
+        //changing the upper function
+        var Vehicle = {
+            vehicleName : 'Nissan',
+            printVehicleNameInner : function(){
+                return function(){
+                    console.log(this.vehicleName);
+                }
+            }
+        };
+        
+        var x = Vehicle.printVehicleNameInner();
+        x();
+        
+        
+        // when using call method
+        var y = Vehicle.printVehicleNameInner();
+        y.call(Vehicle);
+        
+        // when using bind  method
+        var z = Vehicle.printVehicleNameInner().bind(Vehicle);
+        z();
+        
+        
+        
+        //question2 -------------------------------------------------
+        
+        function taxCalculator(tax){
+            return function(amount){
+                return(amount*tax/100);
+            }
+        }
+        
+        var t = taxCalculator(10)
+        console.log(t(90));
+        
+        
+        
+        //question3 --------------------------------------------------
+        
+        function fetchUsers(){
+            fetch('https://api.github.com/users').then(function(response){
+                return response.json();
+            }).then(function (json){
+                console.log(json);
+            });  
+        }
+        
+        fetchUsers();
+        
+        function fetchUsers2(){
+            return fetch('https://api.github.com/users').then(response=> response.json());
+        }
+        
+        fetchUsers2().then(function (json){
+            console.log(json);
+                           });
+        
+        
+        
+        //question4 -----------------------------------------------------
+        
+        function Vehicle(type){
+            this.type = type;
+            Vehicle.VehicleCount++;
+        }
+        Vehicle.VehicleCount = 0;
+        
+        Vehicle.prototype.drive = function(){
+            console.log("Vehicle is driving");
+        }
+        
+        var v = new Vehicle('Toyota');
+        
+        
+        function Car(type){
+            Vehicle.call(this,type);
+        }
+        
+        Car.prototype = Object.create(Vehicle.prototype);
+        Car.prototype.constructor = Car;
+        Car.prototype.balanceWheels = function(){
+            console.log("Wheels are balanced");
+        }
+        
+        var car = new Car('Nissan'); 
+        car.drive();
+        car.balanceWheels(); 
+        console.log(car.type, Vehicle.VehicleCount); 
+        
+        
+        
+        //question5 ----------------------------------------------------
+        
+        let vehicleName = 'Toyota'; 
+        vehicleName = 'Nissan'; 
+        const COUNTRY = 'Japan';
+        
+        
+        //question6 -----------------------------------------------------
+        function fetchUsers() {    
+            return fetch('https://api.github.com/users')        .then(response => response.json()); 
+        } 
+        
+        fetchUsers().then(json => {    
+            console.log(json); 
+        });
+        
+        
+        //question7 -----------------------------------------------------
+        
+        async function fetchUsersAsync() {    
+            const response = await fetch('https://api.github.com/users');    const json = await response.json();    console.log(json); } 
+        
+        fetchUsersAsync();
+        
+        
+        //question8 -----------------------------------------------------
+        
+        class Vehicle {    
+            constructor(type) {        
+                Vehicle.VehicleCount++;        
+                this.type = type;    
+            }    
+            
+            drive() {        
+                console.log('Vehicle is driving'); 
+            } 
+        } 
+        
+        Vehicle.VehicleCount = 0; 
+        const vehicle = new Vehicle('Toyota'); 
+        vehicle.drive(); 
+        console.log(Vehicle.VehicleCount); 
+        
+        class Car extends Vehicle {    
+            constructor(type) {        
+                super(type);    }    
+            balanceWheels() {        
+                console.log('Wheels are balanced');    
+            } 
+        } 
+        
+        const car = new Car('Nissan'); 
+        car.drive(); 
+        car.balanceWheels(); 
+        console.log(Vehicle.VehicleCount); 
+        
+        
+    </script>
+    </head>
+</html>
